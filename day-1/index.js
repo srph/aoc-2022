@@ -27,4 +27,11 @@ console.table(
   })
 )
 
-console.log('total calories of the heaviest elf', sorted[0].total)
+const top = sorted.slice(0, 3)
+
+console.log(
+  'total calories of the 3 heaviest elves:',
+  top.reduce((total, elf) => {
+    return total + elf.total
+  }, 0)
+)
