@@ -1,0 +1,12 @@
+{
+  "name": "aoc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:day-1": "node day-1/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
