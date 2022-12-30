@@ -1,29 +1,33 @@
 const { input } = require('./input')
 
-let total = 0
+function partOne() {
+  let total = 0
 
-const values = input.map((pair) => {
-  return pair.map((value) => {
-    return value.split('-')
+  const values = input.map((pair) => {
+    return pair.map((value) => {
+      return value.split('-').map(Number)
+    })
   })
-})
 
-const isFullyOverlapping = ([aMin, aMax], [bMin, bMax]) => {
-  // console.log([aMin, aMax], [bMin, bMax], aMin <= bMin && aMax >= bMax)
+  const isFullyOverlapping = ([aMin, aMax], [bMin, bMax]) => {
+    // console.log([aMin, aMax], [bMin, bMax], aMin <= bMin && aMax >= bMax)
 
-  if (aMin <= bMin && aMax >= bMax) {
-    return true
+    if (aMin <= bMin && aMax >= bMax) {
+      return true
+    }
+
+    return false
   }
 
-  return false
-}
+  for (const pair of values) {
+    const [a, b] = pair
 
-for (const pair of values) {
-  const [a, b] = pair
-
-  if (isFullyOverlapping(a, b) || isFullyOverlapping(b, a)) {
-    total += 1
+    if (isFullyOverlapping(a, b) || isFullyOverlapping(b, a)) {
+      total += 1
+    }
   }
+
+  return total
 }
 
-console.log(values.length, total)
+console.log('Part one ->', partOne())
