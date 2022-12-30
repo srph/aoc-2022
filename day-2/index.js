@@ -26,19 +26,23 @@ const scores = {
   you: 0
 }
 
-const rules = [
-  ['rock', 'scissors'],
-  ['paper', 'rock'],
-  ['scissors', 'paper']
-]
+const win = {
+  rock: 'scissors',
+  paper: 'rock',
+  scissors: 'paper'
+}
+
+const lose = {
+  rock: 'paper',
+  paper: 'scissors',
+  scissors: 'rock'
+}
 
 const ruleCheck = (a, b) => {
-  for (const [winningMove, losingMove] of rules) {
-    if (a === winningMove && b === losingMove) {
-      return {
-        a: outcome.won + shapes[a],
-        b: outcome.lost + shapes[b]
-      }
+  if (a === lose[b] && b === win[a]) {
+    return {
+      a: outcome.won + shapes[a],
+      b: outcome.lost + shapes[b]
     }
   }
 }
@@ -68,8 +72,18 @@ const check = (a, b) => {
   throw new Error(`Unable to process ${a} versus ${b}.`)
 }
 
+const guess = (a, b) => {
+  const value = {
+    X: win[mapping[a]],
+    Y: mapping[a],
+    Z: lose[mapping[a]]
+  }
+
+  return value[b]
+}
+
 for (const [opponent, you] of input) {
-  const { a: aScore, b: bScore } = check(mapping[opponent], mapping[you])
+  const { a: aScore, b: bScore } = check(mapping[opponent], guess(opponent, you))
   scores.opponent += aScore
   scores.you += bScore
 }
