@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:day-2": "node day-2/index.js",
-    "build:day-1": "node day-1/index.js"
+    "build:3": "node day-3/index.js",
+    "build:2": "node day-2/index.js",
+    "build:1": "node day-1/index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
