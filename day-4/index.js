@@ -10,8 +10,6 @@ function partOne() {
   })
 
   const isFullyOverlapping = ([aMin, aMax], [bMin, bMax]) => {
-    // console.log([aMin, aMax], [bMin, bMax], aMin <= bMin && aMax >= bMax)
-
     if (aMin <= bMin && aMax >= bMax) {
       return true
     }
@@ -30,4 +28,33 @@ function partOne() {
   return total
 }
 
+function partTwo() {
+  let total = 0
+
+  const values = input.map((pair) => {
+    return pair.map((value) => {
+      return value.split('-').map(Number)
+    })
+  })
+
+  const isSubset = ([aMin, aMax], [bMin, bMax]) => {
+    if (aMin >= bMin && aMin <= bMax) {
+      return true
+    }
+
+    return false
+  }
+
+  for (const pair of values) {
+    const [a, b] = pair
+
+    if (isSubset(a, b) || isSubset(b, a)) {
+      total += 1
+    }
+  }
+
+  return total
+}
+
 console.log('Part one ->', partOne())
+console.log('Part two ->', partTwo())
