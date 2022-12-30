@@ -26,8 +26,6 @@ const scores = {
   you: 0
 }
 
-// a
-
 const rules = [
   ['rock', 'scissors'],
   ['paper', 'rock'],
