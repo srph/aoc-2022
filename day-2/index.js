@@ -1,3 +1,5 @@
+const { input } = require('./input')
+
 const shapes = {
   rock: 1,
   paper: 2,
@@ -18,12 +20,6 @@ const mapping = {
   Y: 'paper',
   Z: 'scissors'
 }
-
-const strategy = [
-  ['A', 'X'],
-  ['B', 'Y'],
-  ['C', 'Z']
-]
 
 const scores = {
   opponent: 0,
@@ -74,9 +70,8 @@ const check = (a, b) => {
   throw new Error(`Unable to process ${a} versus ${b}.`)
 }
 
-for (const [opponent, you] of strategy) {
+for (const [opponent, you] of input) {
   const { a: aScore, b: bScore } = check(mapping[opponent], mapping[you])
-  console.log(aScore, bScore)
   scores.opponent += aScore
   scores.you += bScore
 }
