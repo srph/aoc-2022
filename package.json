@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:9": "node day-9/index.js",
     "build:8": "node day-8/index.js",
     "build:7": "node day-7/index.js",
     "build:6": "node day-6/index.js",
