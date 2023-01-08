@@ -68,15 +68,35 @@ function stepTwo() {
     y: 0
   }
 
-  const knots = Array.from({ length: 9 }).fill({ x: 0, y: 0 })
-
-  const tail = {
+  const knots = Array.from({ length: 9 }).fill({
     x: 0,
     y: 0
-  }
+  })
 
   const visited = {
     '0-0': true
+  }
+
+  const adjust = (previous, knot) => {
+    const copy = { ...knot }
+
+    const distance = {
+      x: previous.x - copy.x,
+      y: previous.y - copy.y
+    }
+
+    if (Math.abs(distance.x) >= 2 && Math.abs(distance.y) >= 2) {
+      copy.x = copy.x + Math.floor(distance.x / 2)
+      copy.y = copy.y + Math.floor(distance.y / 2)
+    } else if (Math.abs(distance.x) >= 2) {
+      copy.x = copy.x + Math.floor(distance.x / 2)
+      copy.y = copy.y + distance.y
+    } else if (Math.abs(distance.y) >= 2) {
+      copy.x = copy.x + distance.x
+      copy.y = copy.y + Math.floor(distance.y / 2)
+    }
+
+    return copy
   }
 
   for (const command of input) {
@@ -88,22 +108,11 @@ function stepTwo() {
       head.x += movement[direction].x
       head.y += movement[direction].y
 
-      const distance = {
-        x: head.x - tail.x,
-        y: head.y - tail.y
+      for (let i = 0; i < knots.length; i++) {
+        knots[i] = adjust(i === 0 ? head : knots[i - 1], knots[i])
       }
 
-      if (Math.abs(distance.x) >= 2 && Math.abs(distance.y)) {
-        tail.x = tail.x + distance.x / 2
-        tail.y = tail.y + distance.y
-      } else if (Math.abs(distance.y) >= 2 && Math.abs(distance.y)) {
-        tail.x = tail.x + distance.x
-        tail.y = tail.y + distance.y / 2
-      } else if (Math.abs(distance.x) >= 2) {
-        tail.x = tail.x + distance.x / 2
-      } else if (Math.abs(distance.y) >= 2) {
-        tail.y = tail.y + distance.y / 2
-      }
+      const tail = knots[knots.length - 1]
 
       visited[`${tail.x}-${tail.y}`] = true
     }
