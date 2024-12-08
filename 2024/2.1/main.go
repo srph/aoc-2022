@@ -60,6 +60,7 @@ func main() {
 	for _, record := range records {
 		var mode string
 		last := 0
+		counter := 0
 		for i, number := range record {
 			if i == 0 {
 				last = number
@@ -73,6 +74,10 @@ func main() {
 			}
 
 			if last == number {
+				counter += 1
+				if counter <= 1 {
+					continue
+				}
 				metas = append(metas, RecordMetadata{
 					Mode:    "",
 					Safe:    false,
@@ -81,6 +86,10 @@ func main() {
 				})
 				break
 			} else if mode == "desc" && last < number {
+				counter += 1
+				if counter <= 1 {
+					continue
+				}
 				metas = append(metas, RecordMetadata{
 					Mode:    "",
 					Safe:    false,
@@ -89,6 +98,10 @@ func main() {
 				})
 				break
 			} else if mode == "asc" && last > number {
+				counter += 1
+				if counter <= 1 {
+					continue
+				}
 				metas = append(metas, RecordMetadata{
 					Mode:    "",
 					Safe:    false,
@@ -104,6 +117,10 @@ func main() {
 			}
 
 			if distance > 3 {
+				counter += 1
+				if counter <= 1 {
+					continue
+				}
 				metas = append(metas, RecordMetadata{
 					Mode:    "",
 					Safe:    false,
@@ -113,16 +130,16 @@ func main() {
 				break
 			}
 
-			if i == len(record)-1 {
-				metas = append(metas, RecordMetadata{
-					Mode:    mode,
-					Safe:    true,
-					Record:  record,
-					Failure: "",
-				})
-			}
-
 			last = number
+		}
+
+		if counter <= 1 {
+			metas = append(metas, RecordMetadata{
+				Mode:    mode,
+				Safe:    true,
+				Record:  record,
+				Failure: "",
+			})
 		}
 	}
 
